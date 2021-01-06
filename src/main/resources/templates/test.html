@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>测试</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.8.0/js/md5.min.js"></script>
+    <script src="https://cdnjs.loli.net/ajax/libs/js-sha1/0.4.1/sha1.min.js"></script>
+    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+</head>
+<body>
+    <div id="app" style="margin-left: 600px">
+        <input v-model="aa">
+        <input type="hidden" v-model="aa">
+        <button @click="aa += 1">{{aa}}</button>
+
+        <br>
+        <button style="margin: 10px 0px 10px 0px" @click="test">test</button>
+        <br>
+        <span v-bind:title="bb">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+    <div id="app-4" style="margin: 10px 0px 10px 600px">
+        <button v-on:click="add"> add </button>
+        <button v-on:click="del"> del </button>
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+    <div id="app2" style="margin-left: 600px">
+        <p>单个复选框：</p>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+
+        <p>多个复选框：</p>
+        <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+        <label for="runoob">Runoob</label>
+        <input type="checkbox" id="google" value="Google" v-model="checkedNames">
+        <label for="google">Google</label>
+        <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+        <label for="taobao">taobao</label>
+        <div>选择的值为: {{ checkedNames }}</div>
+
+        <p>单选框：</p>
+        <input type="radio" id="runoob2" value="Runoob" v-model="picked">
+        <label for="runoob2">Runoob</label>
+        <input type="radio" id="google2" value="Google" v-model="picked">
+        <label for="google2">Google</label>
+        <div>选中值为: {{ picked }}</div>
+
+        <p>下拉框：</p>
+        <select v-model="selected" name="fruit">
+            <option value="">选择一个网站</option>
+            <option value="www.runoob.com">Runoob</option>
+            <option value="www.google.com">Google</option>
+        </select>
+        <div id="output">
+            选择的网站是: {{selected}}
+        </div>
+    </div>
+
+
+<div id="app-6" style="margin: 10px 0px 10px 600px">
+    <input v-model="aa">
+    <button @click="jiemi">解密</button>
+
+    <br>
+</div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            aa: 1234,
+            bb: 54321,
+        },
+        methods: {
+            test: function() {
+                //ajax请求
+                axios({
+                    method:'get',
+                    url:'/tk/sysSubject?sysSubjectId=202'
+                }).then(function(res){
+                    alert(JSON.stringify(res.data));
+                });
+            },
+
+        },
+
+    })
+
+    var app4 = new Vue({
+        el: '#app-4',
+        data: {
+            todos: [
+                { text: '学习 JavaScript' },
+                { text: '学习 Vue' },
+                { text: '整个牛项目' }
+            ],
+            num: 0
+        },
+        methods: {
+            add: function () {
+                this.todos.push({"text": "新项目" + this.num++})
+            },
+            del: function () {
+                if(this.todos.length > 3){
+                    this.todos.splice(this.todos.length - 1,1);
+                    if(this.num > 0)this.num--
+                }
+
+            },
+        }
+    })
+
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            checked : false,
+            checkedNames: [],
+            picked: "Runoob",
+            selected: "",
+        }
+    });
+
+    var app6 = new Vue({
+        el: "#app-6",
+        data: {
+            aa: "21232f297a57a5a743894a0e4a801fc3",
+        },
+        methods: {
+            jiemi: function(hash, type) {
+                //ajax请求
+                axios({
+                    hash: this.aa,
+                    t: 0,
+                    captcha: "t032El_2dSjeEJUsYW3z1ps2JaepNvQbg_fBCyV4GZVp7FOLm32x3BZZK3OLzjs56rNQL96bHOZATw37753CMoxf1_y-WpARnHF0Q8_-qSaPhcVslvgM3928w**|@c5I",
+                    url:"https://www.somd5.com/search.php",
+                    type: "POST",
+                    xhrFields: {
+
+                        withCredentials: true
+
+                    },
+                }).then(function(res){
+                    var error = result.err;
+                    var datab = '结果';
+                    switch (error) {
+                        case 0:
+                            $('#color').attr('class', 'panel panel-success');
+                            var dataa = result.data;
+                            var datab = result.type;
+                            break;
+                        case 1:
+                            $('#color').attr('class', 'panel panel-warning');
+                            $("#hash").focus();
+                            var dataa = '请输入密文';
+                            break;
+                        case 2:
+                            $('#color').attr('class', 'panel panel-warning');
+                            var dataa = '此密文无法识别';
+                            break;
+                        case 3:
+                            $('#color').attr('class', 'panel panel-danger');
+                            var dataa = '破解失败,后台解密将在24小时内运行完毕,可以每隔几个小时来试试';
+                            break;
+                        case 4:
+                            $('#color').attr('class', 'panel panel-danger');
+                            var dataa = (result.data);
+                            break;
+                        case 5:
+                            $('#color').attr('class', 'panel panel-danger');
+                            var dataa = '验证失败,请重新点击查询';
+                            //document.cookie = "verify=0";
+                            break;
+                    }
+                    this.aa =dataa;
+                });
+            },
+
+        },
+
+    })
+
+    function jiemi(hash, type, verify) {
+        $.post("search.php", {
+            hash: hash,
+            t: type,
+            captcha: verify
+        }, function(result) {
+            var error = result.err;
+            var datab = '结果';
+            switch (error) {
+                case 0:
+                    $('#color').attr('class', 'panel panel-success');
+                    var dataa = result.data;
+                    var datab = result.type;
+                    break;
+                case 1:
+                    $('#color').attr('class', 'panel panel-warning');
+                    $("#hash").focus();
+                    var dataa = '请输入密文';
+                    break;
+                case 2:
+                    $('#color').attr('class', 'panel panel-warning');
+                    var dataa = '此密文无法识别';
+                    break;
+                case 3:
+                    $('#color').attr('class', 'panel panel-danger');
+                    var dataa = '破解失败,后台解密将在24小时内运行完毕,可以每隔几个小时来试试';
+                    break;
+                case 4:
+                    $('#color').attr('class', 'panel panel-danger');
+                    var dataa = (result.data);
+                    break;
+                case 5:
+                    $('#color').attr('class', 'panel panel-danger');
+                    var dataa = '验证失败,请重新点击查询';
+                    //document.cookie = "verify=0";
+                    break;
+            }
+            $("#re").html(dataa);
+            $("#ti").html(datab);
+        }, "json");
+    }
+</script>
+</html>

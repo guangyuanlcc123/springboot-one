@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+
+    <context id="myGenerator" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!--<property name="autoDelimitKeywords" value="true"/>-->
+        <!--<property name="beginningDelimiter" value="\&quot;"/>-->
+        <!--<property name="endingDelimiter" value="\&quot;"/>-->
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.example.demo.base.MapperBase"/>
+        </plugin>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/demo_inxedu_v2_0_open"
+                        userId="root"
+                        password="lcc19940903">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.example.demo.entity" targetProject="D:\NewIdeaFile\testFile\tkmybatis\src\main\java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.example.demo.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!--delimitAllColumns="true"-->
+        <table schema="demo_inxedu_v2_0_open" tableName="sys_subject" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <!--sqlserver 配置-->
+            <!--<generatedKey column="id" sqlStatement="SqlServer" identity="true"/>-->
+            <!--mysql 配置-->
+            <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+            <!--oracle 配置-->
+            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,49 @@
+server:
+  port: 6001
+
+
+spring:
+  datasource:
+    name: demo_inxedu_v2_0_open
+    url: jdbc:mysql://localhost:3306/demo_inxedu_v2_0_open?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC #url
+    username: root
+    password: lcc19940903
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 127.0.0.1
+    prot: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    #支持发布返回
+    publisher-returns: true
+    listener:
+      simple:
+        #采用手动应答
+        acknowledge-mode: manual
+        #当前监听容器数
+        concurrency: 1
+        #最大数
+        max-concurrency: 1
+        #是否支持重试
+        retry:
+          enabled: true
+
+#是否激活 swagger true or false
+swagger:
+  enable: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.example.demo.entity
+
+#在log日志中打印sql语句
+logging:
+  level:
+    com.example.demo.mapper: DEBUG
+
+
+
+
+
+

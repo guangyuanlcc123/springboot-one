@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysSubjectMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.SysSubject">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="SUBJECT_ID" jdbcType="INTEGER" property="subjectId" />
+    <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName" />
+    <result column="STATUS" jdbcType="BIT" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="PARENT_ID" jdbcType="INTEGER" property="parentId" />
+    <result column="SORT" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    SUBJECT_ID, SUBJECT_NAME, STATUS, CREATE_TIME, PARENT_ID, SORT
+  </sql>
+
+  <select id="getSysSubjectsByName" resultMap="BaseResultMap">
+      SELECT SUBJECT_ID, SUBJECT_NAME, STATUS, CREATE_TIME, PARENT_ID, SORT
+      FROM sys_subject WHERE SUBJECT_NAME LIKE CONCAT('%', #{name} ,'%')
+  </select>
+</mapper>
